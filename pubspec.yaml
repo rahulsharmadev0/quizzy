@@ -1,0 +1,48 @@
+name: quizzy
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.2.1
+  json_annotation: ^4.9.0
+  flutter_bloc: ^9.0.0
+  hydrated_bloc: ^10.0.0
+
+  bloc_suite:
+    git:
+      url: https://github.com/rahulsharmadev0/suite.git
+      ref: main
+      path: packages/bloc_suite
+  dart_suite:
+    git:
+      url: https://github.com/rahulsharmadev0/suite.git
+      ref: main
+      path: packages/dart_suite
+  equatable: ^2.0.7
+  path_provider: ^2.1.5
+  fl_chart: ^0.70.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  json_serializable: ^6.9.3
+  build_runner: ^2.4.14
+  bloc_test: ^10.0.0
+  mockito: ^5.4.5
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
