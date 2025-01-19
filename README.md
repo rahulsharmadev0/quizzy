@@ -41,8 +41,8 @@ Quizzy is a Flutter-based quiz application that ensures a clean, maintainable, a
   - [**Resources**](#resources)
 ---
 ## **Demo**
-[![Watch the demo](.media\thumbnail.png)](https://www.youtube.com/watch?v=hohtDnLANXU)
 
+[![Watch the demo](.media/thumbnail.png)](https://www.youtube.com/watch?v=hohtDnLANXU "Watch the demo")
 
 ## **Getting Started**
 
@@ -203,7 +203,7 @@ In `main_debug.dart`, you might enable overlays or verbose logging for easier de
 
 ## **How Logic and UI Are Separated**
 
-![Flutter's recommended app architecture guide](.media\architecture.png)
+![Flutter's recommended app architecture guide](.media/architecture.png)
 
 This project adheres to [Flutter's recommended app architecture guide](https://docs.flutter.dev/app-architecture/guide), with slight modifications in folder naming to enhance clarity and maintainability. The structure ensures a clear separation of concerns:
 ### **Logic Layer (View-Model)**
