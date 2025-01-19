@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:quizzy/ui/bloc/quiz_timer_bloc.dart';
+import 'package:quizzy/ui/bloc/quiz_timer/quiz_timer_bloc.dart';
 
 void main() {
   group('QuizTimerManager', () {

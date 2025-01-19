@@ -1,7 +1,7 @@
 name: quizzy
-description: "A new Flutter project."
+description: "Quizzy is a Flutter-based quiz application that ensures a clean, maintainable, and scalable codebase by separating logic and UI components."
 
-publish_to: "none"
+publish_to: "https://github.com/rahulsharmadev0/quizzy"
 
 version: 1.0.0+1
 
@@ -29,7 +29,6 @@ dependencies:
       url: https://github.com/rahulsharmadev0/suite.git
       ref: main
       path: packages/dart_suite
-
 
   equatable: ^2.0.7
   path_provider: ^2.1.5

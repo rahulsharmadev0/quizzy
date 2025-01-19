@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quizzy/logic/models/quiz_outcome.dart';
-import 'package:quizzy/ui/utils/frame_limit.dart';
+import 'package:quizzy/ui/modules/widgets/frame_limit.dart';
 import 'package:confetti/confetti.dart'; // Add this import
 
 class QuizCompleteScreen extends StatefulWidget {

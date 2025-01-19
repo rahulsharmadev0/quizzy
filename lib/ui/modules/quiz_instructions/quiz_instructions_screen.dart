@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quizzy/logic/models/quiz.dart';
-import 'package:quizzy/ui/bloc/bloc/quiz_data_manager_bloc.dart';
+import 'package:quizzy/ui/bloc/quiz_data_manager/quiz_data_manager_bloc.dart';
 import 'package:quizzy/ui/modules/quiz_instructions/widget/mark_container.dart';
-import 'package:quizzy/ui/utils/frame_limit.dart';
-import 'package:quizzy/ui/widgets/default_button.dart';
+import 'package:quizzy/ui/modules/widgets/frame_limit.dart';
+import 'package:quizzy/ui/modules/widgets/default_button.dart';
 import 'package:quizzy/ui/modules/quiz_instructions/cubit/quiz_setup_cubit.dart';
 
 /// Screen to display quiz instructions

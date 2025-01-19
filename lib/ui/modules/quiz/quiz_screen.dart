@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quizzy/logic/models/quiz.dart';
 import 'package:quizzy/logic/models/quiz_outcome.dart';
-import 'package:quizzy/ui/bloc/quiz_bloc.dart';
-import 'package:quizzy/ui/bloc/quiz_history_bloc.dart';
-import 'package:quizzy/ui/bloc/quiz_timer_bloc.dart';
-import 'package:quizzy/ui/utils/frame_limit.dart';
-import 'package:quizzy/ui/widgets/default_button.dart';
+import 'package:quizzy/ui/bloc/quiz/quiz_bloc.dart';
+import 'package:quizzy/ui/bloc/quiz_history/quiz_history_bloc.dart';
+import 'package:quizzy/ui/bloc/quiz_timer/quiz_timer_bloc.dart';
+import 'package:quizzy/ui/modules/widgets/frame_limit.dart';
+import 'package:quizzy/ui/modules/widgets/default_button.dart';
 
 part 'widgets/other_widgets.dart';
 part 'widgets/quiz_options.dart';

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:quizzy/logic/models/quiz.dart';
-import 'package:quizzy/ui/bloc/bloc/quiz_data_manager_bloc.dart';
+import 'package:quizzy/ui/bloc/quiz_data_manager/quiz_data_manager_bloc.dart';
 
 part 'quiz_setup_state.dart';
 
