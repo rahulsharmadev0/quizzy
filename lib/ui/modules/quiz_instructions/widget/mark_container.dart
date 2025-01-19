@@ -13,7 +13,7 @@ class MarkingContainers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 16,
+      spacing: 12,
       children: [
         Expanded(child: _MarkContainer(-negativeMarks.abs())),
         Expanded(child: _MarkContainer(positiveMarks.abs())),
@@ -34,7 +34,7 @@ class _MarkContainer extends StatelessWidget {
     final textColor = isPositive ? Color(0xFF016900) : Color(0xFFB40000);
     final label = isPositive ? 'Correct Answer' : 'Wrong Answer';
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: bgColor,
@@ -66,11 +66,8 @@ class _MarkContainer extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: TextStyle(
-              color: textColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: textColor),
           ),
         ],
       ),

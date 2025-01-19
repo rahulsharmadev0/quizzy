@@ -11,6 +11,7 @@ class QuizHistoryManager extends HydratedBloc<QuizHistoryEvent, QuizHistoryState
     on<SaveQuizResultEvent>(_onSaveQuizResult);
   }
 
+  /// Handles the [SaveQuizResultEvent] event.
   void _onSaveQuizResult(SaveQuizResultEvent event, Emitter<QuizHistoryState> emit) {
     final currentState = state;
     if (currentState is QuizHistoryLoaded) {

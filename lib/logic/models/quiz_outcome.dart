@@ -1,14 +1,19 @@
+import 'package:dart_suite/dart_suite.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'quiz_outcome.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class QuizOutcome extends Equatable {
+  final int quizId;
   final int total;
   final int correct;
   final int unAnswered;
-  final int unVisited;
+  final int visited;
+  final int negativeMarks;
+  final int positiveMarks;
   final Duration takenTime;
+  final Duration totalTime;
   final DateTime date;
 
   /// A map that provides a detailed breakdown of the user's performance.
@@ -21,12 +26,16 @@ class QuizOutcome extends Equatable {
   final Map<String, dynamic> performanceBreakdown;
 
   const QuizOutcome({
+    required this.quizId,
     required this.total,
+    required this.date,
     required this.correct,
     required this.unAnswered,
-    required this.unVisited,
+    required this.visited,
     required this.takenTime,
-    required this.date,
+    required this.totalTime,
+    required this.negativeMarks,
+    required this.positiveMarks,
     required this.performanceBreakdown,
   });
 
@@ -36,10 +45,12 @@ class QuizOutcome extends Equatable {
 
   @override
   List<Object?> get props => [
+        quizId,
+        totalTime,
         total,
         correct,
         unAnswered,
-        unVisited,
+        visited,
         takenTime,
         date,
         performanceBreakdown,
@@ -49,13 +60,21 @@ class QuizOutcome extends Equatable {
 //------------------------ Extension ------------------------
 
 extension QuizOutcomeExtension on QuizOutcome {
-  double get percentage => (correct / total) * 100;
+  int get wrong => total - correct - unAnswered;
+  int get attempted => total - unAnswered;
   int get ansQues => total - unAnswered;
+  int get unVisited => total - visited;
+
+  int get positiveScore => positiveMarks * correct;
+  int get negativeScore => negativeMarks * wrong;
+  int get score => positiveScore - negativeScore;
+  int get totalScore => positiveMarks * total;
+  double get percentage => ((score / totalScore) * 100).toRoundPrecision(1).toDouble();
 
   String get formattedTime {
-    final minutes = takenTime.inMinutes;
-    final seconds = takenTime.inSeconds.remainder(60);
-    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    return '${takenTime.inHours > 0 ? '${(takenTime.inHours % 60).round()}h ' : ''}'
+        '${takenTime.inMinutes > 0 ? '${(takenTime.inMinutes % 60).round()}m ' : ''}'
+        '${(takenTime.inSeconds % 60).round()}s';
   }
 
   String get formattedDate {

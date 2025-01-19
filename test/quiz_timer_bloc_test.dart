@@ -22,7 +22,7 @@ void main() {
       'emits [QuizTimerRunInProgress] when QuizTimerStarted is added',
       build: () => quizTimerBloc,
       act: (bloc) => bloc.add(QuizTimerStarted(Duration(minutes: 1))),
-      expect: () => [isA<QuizTimerRunInProgress>()],
+      expect: () => [isA<QuizTimerInProgress>()],
     );
 
     blocTest<QuizTimerManager, QuizTimerState>(
@@ -33,8 +33,8 @@ void main() {
         bloc.add(QuizTimerPaused());
       },
       expect: () => [
-        isA<QuizTimerRunInProgress>(),
-        isA<QuizTimerRunPause>(),
+        isA<QuizTimerInProgress>(),
+        isA<QuizTimerPause>(),
       ],
     );
 
@@ -47,9 +47,9 @@ void main() {
         bloc.add(QuizTimerResumed());
       },
       expect: () => [
-        isA<QuizTimerRunInProgress>(),
-        isA<QuizTimerRunPause>(),
-        isA<QuizTimerRunInProgress>(),
+        isA<QuizTimerInProgress>(),
+        isA<QuizTimerPause>(),
+        isA<QuizTimerInProgress>(),
       ],
     );
 
@@ -59,8 +59,8 @@ void main() {
       act: (bloc) => bloc.add(QuizTimerStarted(Duration(seconds: 1))),
       wait: const Duration(seconds: 2),
       expect: () => [
-        isA<QuizTimerRunInProgress>(),
-        isA<QuizTimerRunComplete>(),
+        isA<QuizTimerInProgress>(),
+        isA<QuizTimerComplete>(),
       ],
     );
   });

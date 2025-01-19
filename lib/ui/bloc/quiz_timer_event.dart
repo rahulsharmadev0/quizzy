@@ -15,6 +15,7 @@ final class QuizTimerPaused extends QuizTimerEvent {}
 /// Event to resume the quiz timer.
 final class QuizTimerResumed extends QuizTimerEvent {}
 
+/// Event to stop the quiz timer.
 final class QuizTimerStopped extends QuizTimerEvent {}
 
 /// Event to notify that a tick has occurred.

@@ -21,8 +21,8 @@ class AppTheme extends Cubit<ThemeData> {
     var background = Color(0xffF2EBE1);
     var textTheme = GoogleFonts.interTextTheme();
     textTheme = textTheme.copyWith(
-      bodyMedium: textTheme.bodyMedium!.copyWith(fontSize: 18),
-      headlineMedium: textTheme.bodySmall!.copyWith(fontSize: 28),
+      bodyMedium: textTheme.bodyMedium!.copyWith(fontSize: 18, height: 1.78, fontWeight: FontWeight.w500),
+      headlineMedium: textTheme.bodySmall!.copyWith(fontSize: 28, fontWeight: FontWeight.w600),
     );
 
     final newTheme = ThemeData(
@@ -43,10 +43,7 @@ class AppTheme extends Cubit<ThemeData> {
       textTheme: textTheme,
       appBarTheme: AppBarTheme(backgroundColor: color),
       textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-        foregroundColor: Colors.black,
-        iconColor: Colors.black,
-      )),
+          style: TextButton.styleFrom(foregroundColor: Colors.black, iconColor: Colors.black)),
     );
 
     return newTheme;

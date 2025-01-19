@@ -23,13 +23,20 @@ dependencies:
       url: https://github.com/rahulsharmadev0/suite.git
       ref: main
       path: packages/bloc_suite
+
   dart_suite:
     git:
       url: https://github.com/rahulsharmadev0/suite.git
       ref: main
       path: packages/dart_suite
+
+
   equatable: ^2.0.7
   path_provider: ^2.1.5
+  go_router: ^14.6.3
+  confetti: ^0.8.0
+
+  # Currently not in use, but will be used in the future
   fl_chart: ^0.70.2
 
 dev_dependencies:

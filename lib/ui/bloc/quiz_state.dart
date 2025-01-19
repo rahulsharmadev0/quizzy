@@ -1,7 +1,12 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 part of 'quiz_bloc.dart';
 
 @immutable
-sealed class QuizState {}
+sealed class QuizState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 /// Initial state of the quiz.
 final class QuizInitial extends QuizState {}
@@ -9,13 +14,17 @@ final class QuizInitial extends QuizState {}
 /// State when the quiz is complete.
 final class QuizComplete extends QuizOutcome implements QuizState {
   const QuizComplete({
+    required super.quizId,
     required super.total,
     required super.correct,
     required super.unAnswered,
-    required super.unVisited,
+    required super.visited,
     required super.takenTime,
+    required super.totalTime,
     required super.date,
     required super.performanceBreakdown,
+    required super.positiveMarks,
+    required super.negativeMarks,
   });
 }
 
@@ -38,7 +47,7 @@ final class QuizInProgress extends QuizState {
       ansQueIdxs: {},
       curQueIdx: queIdxs.first,
       queIdxs: queIdxs,
-      visitedQueIdxs: {},
+      visitedQueIdxs: {queIdxs.first},
     );
   }
 
@@ -55,8 +64,13 @@ final class QuizInProgress extends QuizState {
       visitedQueIdxs: visitedQueIdxs ?? this.visitedQueIdxs,
     );
   }
+
+  @override
+  List<Object?> get props => [curQueIdx, queIdxs, visitedQueIdxs, ansQueIdxs];
 }
 
+//
+//
 //--------------------EXTENSIONS--------------------
 
 extension QuizInProgressGetterExt on QuizInProgress {
@@ -70,7 +84,7 @@ extension QuizInProgressGetterExt on QuizInProgress {
   int get ansQues => ansQueIdxs.length;
   int get totalQues => queIdxs.length;
   int get visitedQues => visitedQueIdxs.length;
-  int get unVisitedQues => queIdxs.length - visitedQueIdxs.length;
+  int get unVisitedQues => totalQues - visitedQues;
   bool get isLastQue => curQueIdx == queIdxs.last;
   bool get isFirstQue => curQueIdx == queIdxs.first;
   bool get isCompleted => unAnsQues == 0;
@@ -92,39 +106,47 @@ extension QuizInProgressSetterExt on QuizInProgress {
   QuizInProgress nextQue() {
     if (isLastQue) return this;
     final nextIdx = queIdxs.indexOf(curQueIdx) + 1;
-    return copyWith(curQueIdx: queIdxs[nextIdx]);
+    final _visitedQueIdxs = {...visitedQueIdxs, nextIdx};
+    return copyWith(curQueIdx: queIdxs[nextIdx], visitedQueIdxs: _visitedQueIdxs);
   }
 
   /// Move to the previous question
   QuizInProgress prevQue() {
     if (isFirstQue) return this;
     final prevIdx = queIdxs.indexOf(curQueIdx) - 1;
-    return copyWith(curQueIdx: queIdxs[prevIdx]);
+    final _visitedQueIdxs = {...visitedQueIdxs, prevIdx};
+    return copyWith(curQueIdx: queIdxs[prevIdx], visitedQueIdxs: _visitedQueIdxs);
   }
 
-  /// Mark the current question as visited
-  QuizInProgress markVisited() {
-    if (isVisited(curQueIdx)) return this;
-    final newVisitedQueIdxs = Set<int>.from(visitedQueIdxs);
-    newVisitedQueIdxs.add(curQueIdx);
-    return copyWith(visitedQueIdxs: newVisitedQueIdxs);
+  QuizInProgress reDirectByQueId(int queId) {
+    if (queIdxs.contains(queId)) {
+      return copyWith(curQueIdx: queId, visitedQueIdxs: {...visitedQueIdxs, queId});
+    }
+    return this;
   }
 
   /// Create a QuizComplete object
   QuizComplete createQuizComplete({
+    required Quiz quiz,
     required Duration takenTime,
     required bool Function(int qusId, int optionId) matcher,
   }) {
     int correct = ansQueIdxs.entries.fold<int>(0, (prev, entry) {
       return prev + (matcher(entry.key, entry.value) ? 1 : 0);
     });
+
     return QuizComplete(
-        total: totalQues,
-        correct: correct,
-        unAnswered: unAnsQues,
-        unVisited: unVisitedQues,
-        takenTime: takenTime,
-        date: DateTime.now(),
-        performanceBreakdown: const {});
+      quizId: quiz.id,
+      total: totalQues,
+      correct: correct,
+      unAnswered: unAnsQues,
+      visited: visitedQues,
+      totalTime: Duration(seconds: quiz.duration),
+      takenTime: takenTime,
+      date: DateTime.now(),
+      performanceBreakdown: const {},
+      positiveMarks: quiz.correctAnswerMarks,
+      negativeMarks: quiz.negativeMarks,
+    );
   }
 }

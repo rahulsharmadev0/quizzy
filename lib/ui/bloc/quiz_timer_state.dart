@@ -13,12 +13,16 @@ final class QuizTimerInitial extends QuizTimerState {
 }
 
 /// State when the quiz timer is running.
-final class QuizTimerRunInProgress extends QuizTimerState {
+final class QuizTimerInProgress extends QuizTimerState {
   final int remainingTimeInSeconds;
   final int originalTimeInSeconds;
 
-  const QuizTimerRunInProgress(this.remainingTimeInSeconds, this.originalTimeInSeconds);
+  const QuizTimerInProgress(this.remainingTimeInSeconds, this.originalTimeInSeconds);
+
+  /// Returns the remaining duration as a [Duration] object.
   Duration get duration => Duration(seconds: remainingTimeInSeconds);
+
+  /// Returns the progress of the timer as a percentage.
   double get progress => remainingTimeInSeconds / originalTimeInSeconds;
 
   @override
@@ -26,12 +30,16 @@ final class QuizTimerRunInProgress extends QuizTimerState {
 }
 
 /// State when the quiz timer is paused.
-final class QuizTimerRunPause extends QuizTimerState {
+final class QuizTimerPause extends QuizTimerState {
   final int remainingTimeInSeconds;
   final int originalTimeInSeconds;
 
-  const QuizTimerRunPause(this.remainingTimeInSeconds, this.originalTimeInSeconds);
+  const QuizTimerPause(this.remainingTimeInSeconds, this.originalTimeInSeconds);
+
+  /// Returns the remaining duration as a [Duration] object.
   Duration get duration => Duration(seconds: remainingTimeInSeconds);
+
+  /// Returns the progress of the timer as a percentage.
   double get progress => remainingTimeInSeconds / originalTimeInSeconds;
 
   @override
@@ -39,6 +47,6 @@ final class QuizTimerRunPause extends QuizTimerState {
 }
 
 /// State when the quiz timer has completed.
-final class QuizTimerRunComplete extends QuizTimerState {
-  const QuizTimerRunComplete();
+final class QuizTimerComplete extends QuizTimerState {
+  const QuizTimerComplete();
 }

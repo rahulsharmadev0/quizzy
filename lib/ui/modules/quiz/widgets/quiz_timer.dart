@@ -27,7 +27,10 @@ class QuizTimerAndCounter extends StatelessWidget {
         QuizInProgress _ => '${state.ansQues.toString().padLeft(2, '0')}/${state.queIdxs.length}',
         _ => '00/00',
       };
-      return Row(children: [const Icon(Icons.info_outline), Text(text)]);
+      return Row(spacing: 4, children: [
+        const Icon(Icons.info_outline),
+        Text(text, style: TextStyle(fontWeight: FontWeight.bold))
+      ]);
     });
   }
 
@@ -36,8 +39,8 @@ class QuizTimerAndCounter extends StatelessWidget {
       builder: (context, state) {
         double value = switch (state) {
           QuizTimerInitial _ => 1,
-          QuizTimerRunInProgress _ => state.progress,
-          QuizTimerRunPause _ => state.progress,
+          QuizTimerInProgress _ => state.progress,
+          QuizTimerPause _ => state.progress,
           _ => 0,
         };
         return LinearProgressIndicator(
@@ -53,17 +56,14 @@ class QuizTimerAndCounter extends StatelessWidget {
     return BlocBuilder<QuizTimerManager, QuizTimerState>(
       builder: (context, state) {
         String text = switch (state) {
-          QuizTimerRunInProgress _ => state.duration.toString().substring(2, 7),
-          QuizTimerRunPause _ => state.duration.toString().substring(2, 7),
+          QuizTimerInProgress _ => state.duration.toString().substring(2, 7),
+          QuizTimerPause _ => state.duration.toString().substring(2, 7),
           _ => '00:00',
         };
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(text, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            Icon(Icons.access_time, size: 20),
-          ],
-        );
+        return Row(spacing: 4, children: [
+          Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
+          Icon(Icons.access_time, size: 20),
+        ]);
       },
     );
   }

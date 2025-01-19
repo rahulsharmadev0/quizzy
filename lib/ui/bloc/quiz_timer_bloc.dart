@@ -13,8 +13,8 @@ class QuizTimerManager extends Bloc<QuizTimerEvent, QuizTimerState> {
   /// else return Duration.zero
   Duration get currentDuration {
     return switch (state) {
-      QuizTimerRunInProgress _ => (state as QuizTimerRunInProgress).duration,
-      QuizTimerRunPause _ => (state as QuizTimerRunPause).duration,
+      QuizTimerInProgress _ => (state as QuizTimerInProgress).duration,
+      QuizTimerPause _ => (state as QuizTimerPause).duration,
       _ => Duration.zero
     };
   }
@@ -27,10 +27,11 @@ class QuizTimerManager extends Bloc<QuizTimerEvent, QuizTimerState> {
     on<QuizTimerStopped>(_onStopped);
   }
 
+  /// Handles the [QuizTimerStarted] event.
   void _onStarted(QuizTimerStarted event, Emitter<QuizTimerState> emit) {
     _tickerSubscription?.cancel(); // Cancel any existing subscription
 
-    emit(QuizTimerRunInProgress(event.duration.inSeconds, event.duration.inSeconds));
+    emit(QuizTimerInProgress(event.duration.inSeconds, event.duration.inSeconds));
 
     _tickerSubscription = _tick(event.duration.inSeconds).listen(
       (remainingSeconds) {
@@ -39,37 +40,42 @@ class QuizTimerManager extends Bloc<QuizTimerEvent, QuizTimerState> {
     );
   }
 
+  /// Handles the [QuizTimerPaused] event.
   void _onPaused(QuizTimerPaused event, Emitter<QuizTimerState> emit) {
-    if (state is QuizTimerRunInProgress) {
+    if (state is QuizTimerInProgress) {
       _tickerSubscription?.pause();
-      var state = (this.state as QuizTimerRunInProgress);
-      emit(QuizTimerRunPause(state.remainingTimeInSeconds, state.originalTimeInSeconds));
+      var state = (this.state as QuizTimerInProgress);
+      emit(QuizTimerPause(state.remainingTimeInSeconds, state.originalTimeInSeconds));
     }
   }
 
+  /// Handles the [QuizTimerStopped] event.
   void _onStopped(QuizTimerStopped event, Emitter<QuizTimerState> emit) {
     _tickerSubscription?.cancel();
-    emit(const QuizTimerInitial());
   }
 
+  /// Handles the [QuizTimerResumed] event.
   void _onResumed(QuizTimerResumed event, Emitter<QuizTimerState> emit) {
-    if (state is QuizTimerRunPause) {
+    if (state is QuizTimerPause) {
       _tickerSubscription?.resume();
 
-      var state = (this.state as QuizTimerRunInProgress);
-      emit(QuizTimerRunInProgress(state.remainingTimeInSeconds, state.originalTimeInSeconds));
+      var state = (this.state as QuizTimerInProgress);
+      emit(QuizTimerInProgress(state.remainingTimeInSeconds, state.originalTimeInSeconds));
     }
   }
 
+  /// Handles the [QuizTimerTicked] event.
   void _onTicked(QuizTimerTicked event, Emitter<QuizTimerState> emit) {
     if (event.durationInSeconds > 0) {
-      emit(QuizTimerRunInProgress(event.durationInSeconds, (state as QuizTimerRunInProgress).originalTimeInSeconds));
+      emit(QuizTimerInProgress(
+          event.durationInSeconds, (state as QuizTimerInProgress).originalTimeInSeconds));
     } else {
-      emit(const QuizTimerRunComplete());
-      _tickerSubscription?.cancel(); // Ensure subscription is cancelled when completed
+      _tickerSubscription?.cancel();
+      emit(QuizTimerComplete());
     }
   }
 
+  /// Creates a stream that emits the remaining time in seconds.
   Stream<int> _tick(int durationInSeconds) =>
       Stream.periodic(const Duration(seconds: 1), (x) => durationInSeconds - x - 1).take(durationInSeconds);
 

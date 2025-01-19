@@ -10,9 +10,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppTheme, ThemeData>(
       builder: (context, theme) {
-        return MaterialApp(
-          initialRoute: AppRoutes.initialRoute,
-          routes: AppRoutes.routes,
+        return MaterialApp.router(
+          routerConfig: router,
           theme: theme,
         );
       },
